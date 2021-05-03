@@ -136,23 +136,6 @@ const products = [
     createdAt: "2021-04-07T16:13:21.520Z",
     updatedAt: "2021-04-09T11:00:49.556Z",
   },
-  {
-    rating: 0,
-    numReviews: 0,
-    price: 0,
-    countInStock: 0,
-    _id: "607046e1fd5da503cb0c48fa",
-    name: "Sample name",
-    user: "606dda21230ce54d2acc4f58",
-    image: "/images/sample.jpg",
-    brand: "Sample brand",
-    category: "Sample category",
-    description: "Sample description",
-    reviews: [],
-    createdAt: "2021-04-09T12:21:53.486Z",
-    updatedAt: "2021-04-09T12:21:53.486Z",
-    __v: 0,
-  },
 ];
 
 export default products;
