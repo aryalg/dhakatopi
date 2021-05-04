@@ -84,8 +84,8 @@ const products = [
     updatedAt: "2021-04-09T11:01:58.121Z",
   },
   {
-    rating: 0,
-    numReviews: 0,
+    rating: 2.5,
+    numReviews: 4,
     price: 12.99,
     countInStock: 6,
     _id: "606dda21230ce54d2acc4f5e",
