@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Row, Image, Col, ListGroup, Card, Button } from "react-bootstrap";
+import {
+  Row,
+  Image,
+  Col,
+  ListGroup,
+  Card,
+  Button,
+  Form,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,6 +89,28 @@ const ProductScreen = ({ history, match }) => {
                       <strong>
                         {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                       </strong>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Choose Quantity:</Col>
+
+                    <Col>
+                      <Form.Control
+                        as="select"
+                        value={product.qty}
+                        onChange={(e) => {
+                          setQty(Number(e.target.value));
+                        }}
+                      >
+                        {[...Array(product.countInStock).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </Form.Control>
                     </Col>
                   </Row>
                 </ListGroup.Item>
