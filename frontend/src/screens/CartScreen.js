@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
-import { Col, ListGroup, Row, Image, Form } from "react-bootstrap";
+import { Col, ListGroup, Row, Image, Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 import Message from "../components/Message";
 
-const CartScreen = ({ match }) => {
+const CartScreen = ({ match, history, location }) => {
   const productId = match.params.id;
+  console.log(location);
+
+  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   console.log(productId);
 
@@ -18,9 +21,13 @@ const CartScreen = ({ match }) => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(addToCart(productId, 2));
+      dispatch(addToCart(productId, qty));
     }
-  }, [dispatch, productId]);
+  }, [dispatch, productId, qty]);
+
+  const removeFromCartHandler = (productId) => {
+    dispatch(removeFromCart(productId));
+  };
 
   return (
     <Row>
@@ -66,6 +73,16 @@ const CartScreen = ({ match }) => {
                         </option>
                       ))}
                     </Form.Control>
+                  </Col>
+
+                  <Col md={2}>
+                    <Button
+                      type="button"
+                      variant="light"
+                      onClick={() => removeFromCartHandler(item.product)}
+                    >
+                      <i className="fas fa-trash"></i>
+                    </Button>
                   </Col>
                 </Row>
               </ListGroup.Item>
