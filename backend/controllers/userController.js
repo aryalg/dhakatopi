@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import catchAsync from "express-async-handler";
+import generateToken from "../utils/generateToken.js";
 
 // We'll put all the logic to handle particular user related things here
 
@@ -22,10 +23,10 @@ export const authUser = catchAsync(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null,
+      token: generateToken(user._id),
     });
   } else {
-    return res.status(401);
+    res.status(401);
     throw new Error("Invalid Email or Password");
   }
 });
