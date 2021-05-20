@@ -30,3 +30,11 @@ export const authUser = catchAsync(async (req, res) => {
     throw new Error("Invalid Email or Password");
   }
 });
+
+// @desc    GET USER PROFILE
+// @route   GET /api/users/profile
+// @access  private
+
+const getUserProfile = catchAsync(async (req, res) => {
+  const user = await User.findById();
+});
