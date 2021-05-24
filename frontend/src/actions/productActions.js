@@ -12,7 +12,7 @@ export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get("http://localhost:5000/api/products");
+    const { data } = await axios.get("http://localhost:5001/api/products");
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -34,7 +34,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/products/${id}`
+      `http://localhost:5001/api/products/${id}`
     );
 
     dispatch({

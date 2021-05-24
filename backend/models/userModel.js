@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    // 123456 - User changed password - 8765432
     password: {
       type: String,
       required: true,
@@ -26,6 +27,18 @@ const userSchema = mongoose.Schema(
     timestamp: true,
   }
 );
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    // Password is not modified
+    next();
+  }
+  // Password is modified
+  const salt = await bscrypt.genSalt(10);
+
+  this.password = await bscrypt.hash(this.password, salt);
+  next();
+});
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bscrypt.compare(enteredPassword, this.password);
