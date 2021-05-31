@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails } from "../actions/userActions";
+import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
@@ -14,6 +14,9 @@ const ProfileScreen = ({ history }) => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const userLogin = useSelector((state) => state.userLogin);
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+
+  const { success } = userUpdateProfile;
 
   const { loading, error, user } = userDetails;
 
@@ -44,6 +47,14 @@ const ProfileScreen = ({ history }) => {
       setMessage("Password are not the same");
     } else {
       // DISPATCH UPDATE PROFILE
+      dispatch(
+        updateUserProfile({
+          id: user._id,
+          name,
+          email,
+          password,
+        })
+      );
     }
   };
 
@@ -54,6 +65,9 @@ const ProfileScreen = ({ history }) => {
         {message && <Message variant="danger">{message}</Message>}
 
         {error && <Message variant="danger">{error}</Message>}
+        {loading && <Loader />}
+
+        {success && <Message variant="success">Profile Updated</Message>}
         {loading && <Loader />}
 
         <Form onSubmit={submitHandler}>
