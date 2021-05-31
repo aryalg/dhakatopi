@@ -5,10 +5,32 @@ import asyncHandler from "express-async-handler";
 // @routes  GET /api/products
 // @access  public
 
+function shuffle(array) {
+  var currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
+
 const getProducts = asyncHandler(async (req, res) => {
   let products = await Product.find({});
 
-  res.json(products);
+  let shuffleProducts = shuffle(products);
+
+  res.json(shuffleProducts);
 });
 
 // @desc    Fetch product by ID
