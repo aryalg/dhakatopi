@@ -20,7 +20,7 @@ const PaymentScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(savePaymentMethod({ paymentMethod }));
+    dispatch(savePaymentMethod(paymentMethod));
     history.push("/placeorder");
   };
 
@@ -33,7 +33,7 @@ const PaymentScreen = ({ history }) => {
       <h1>Payment Method</h1>
 
       <Form onSubmit={submitHandler}>
-        <Form.Group class="paymentMethod">
+        <Form.Group className="paymentMethod">
           <Form.Label as="legend">Select Method</Form.Label>
           <Col>
             <Form.Check

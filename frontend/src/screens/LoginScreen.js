@@ -7,7 +7,7 @@ import { login } from "../actions/userActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
-const LoginScreen = ({ history }) => {
+const LoginScreen = ({ history, location }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,11 +17,14 @@ const LoginScreen = ({ history }) => {
 
   const { loading, error, userInfo } = userLogin;
 
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   useEffect(() => {
+    console.log(location);
     if (userInfo) {
-      history.push("/");
+      history.push(redirect);
     }
-  });
+  }, [redirect, history, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
