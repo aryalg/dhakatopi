@@ -116,3 +116,13 @@ export const registerUser = catchAsync(async (req, res) => {
     throw new Error("Invalid User Data");
   }
 });
+
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private access
+
+export const getUsers = catchAsync(async (req, res) => {
+  const users = await User.find({});
+
+  res.json(users);
+});
