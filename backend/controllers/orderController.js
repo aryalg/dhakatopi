@@ -77,4 +77,10 @@ const updateOrderById = catchAsync(async (req, res) => {
   }
 });
 
-export { addOrderItems, getOrderById, updateOrderById };
+const getMyOrders = catchAsync(async (req, res) => {
+  const orders = await Order.find({ user: req.user.id });
+
+  return res.send(orders);
+});
+
+export { addOrderItems, getOrderById, updateOrderById, getMyOrders };
