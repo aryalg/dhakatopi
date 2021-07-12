@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import {
+  getUserDetails,
+  listUsers,
+  updateUserProfile,
+} from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -37,6 +41,7 @@ const ProfileScreen = ({ history }) => {
       if (!user.name) {
         dispatch(getUserDetails());
         dispatch(listMyOrders());
+        dispatch(listUsers());
       } else {
         setName(user.name);
         setEmail(user.email);

@@ -26,11 +26,32 @@ function shuffle(array) {
 }
 
 const getProducts = asyncHandler(async (req, res) => {
-  let products = await Product.find({});
+  const pageSize = 10;
 
-  let shuffleProducts = shuffle(products);
+  const page = Number(req.query.pageNumber) || 1;
 
-  res.json(shuffleProducts);
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keyword });
+
+  let products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  // 99 pageSize - 10  (99/10 = 9.9 (10 after ceiling))
+
+  res.json({
+    products,
+    page,
+    pages: Math.ceil(count / pageSize),
+  });
 });
 
 // @desc    Fetch product by ID
@@ -48,4 +69,13 @@ const getProductById = asyncHandler(async (req, res) => {
   }
 });
 
-export { getProducts, getProductById };
+// @desc    Fetch Top Products
+// @routes  GET /api/products/top
+// @access  public
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.json(products);
+});
+
+export { getProducts, getProductById, getTopProducts };
